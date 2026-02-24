@@ -1,0 +1,5 @@
+/* App-level overrides; most styles live in index.css and component CSS */
+
+#root {
+  width: 100%;
+}

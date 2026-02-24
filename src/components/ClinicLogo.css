@@ -1,0 +1,14 @@
+.clinic-logo {
+  display: flex;
+  align-items: center;
+}
+
+.clinic-logo__image {
+  height: 54px;
+  width: auto;
+  display: block;
+}
+
+.clinic-logo--light .clinic-logo__image {
+  filter: drop-shadow(0 2px 4px rgba(15, 23, 42, 0.3));
+}

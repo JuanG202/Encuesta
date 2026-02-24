@@ -1,0 +1,67 @@
+:root {
+  /* Clínica de la Visión del Valle - Paleta */
+  --color-bg: #faf9f7;
+  --color-bg-wave-dark: #19318a;
+  --color-bg-wave-light: #a7c1eb;
+  --color-primary: #4297e2;
+  --color-primary-hover: #3580c9;
+  --color-text-dark: #19318a;
+  --color-text-muted: #4a5568;
+  --color-white: #ffffff;
+  --shadow-button: 0 4px 0 #2d6bb5;
+  --radius-button: 16px;
+  --radius-card: 20px;
+  --transition-fast: 0.2s ease;
+  --transition-view: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+button:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* Utilidad para animaciones de entrada */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.survey-view-enter {
+  animation: fadeSlideIn var(--transition-view) forwards;
+}
