@@ -16,27 +16,75 @@ const STEPS = {
 
 export default function App() {
   const [step, setStep] = useState(STEPS.WELCOME);
+
+  // 🔥 AGREGAMOS cedula y eps
   const [answers, setAnswers] = useState({
+    cedula: '',
+    eps: '',
     recommend: '',
     experience: '',
   });
 
   const handleStart = () => setStep(STEPS.QUESTION_EXPERIENCE);
 
-  const handleExperience = (value) => setAnswers((a) => ({ ...a, experience: value }));
-  const handleExperienceNext = () => setStep(STEPS.QUESTION_RECOMMEND);
+  // 🔥 NUEVAS FUNCIONES
+  const handleCedula = (value) =>
+    setAnswers((a) => ({ ...a, cedula: value }));
 
-  const handleRecommend = (value) => setAnswers((a) => ({ ...a, recommend: value }));
-  const handleRecommendNext = () => setStep(STEPS.THANK_YOU);
+  const handleEps = (value) =>
+    setAnswers((a) => ({ ...a, eps: value }));
+
+  const handleExperience = (value) =>
+    setAnswers((a) => ({ ...a, experience: value }));
+
+  const handleExperienceNext = () =>
+    setStep(STEPS.QUESTION_RECOMMEND);
+
+  const handleRecommend = (value) =>
+    setAnswers((a) => ({ ...a, recommend: value }));
+
+  // 🔥 AQUÍ SE CONECTA CON TU BACKEND REAL
+  const handleRecommendNext = async () => {
+    try {
+
+      console.log("Datos enviados:", answers);
+      await fetch('http://localhost:4000/api/encuestas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(answers),
+      });
+
+      setStep(STEPS.THANK_YOU);
+    } catch (error) {
+      console.error('Error enviando encuesta:', error);
+      alert('Error al guardar la encuesta');
+    }
+  };
 
   const handleViewResults = () => setStep(STEPS.RESULTS);
+
   const handleRestart = () => {
     setStep(STEPS.WELCOME);
-    setAnswers({ recommend: '', experience: '' });
+    setAnswers({
+      cedula: '',
+      eps: '',
+      recommend: '',
+      experience: '',
+    });
   };
 
   if (step === STEPS.WELCOME) {
-    return <WelcomeView onStart={handleStart} />;
+    return (
+      <WelcomeView
+        onStart={handleStart}
+        cedula={answers.cedula}
+        eps={answers.eps}
+        onCedulaChange={handleCedula}
+        onEpsChange={handleEps}
+      />
+    );
   }
 
   if (step === STEPS.QUESTION_RECOMMEND) {

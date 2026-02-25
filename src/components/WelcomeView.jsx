@@ -2,7 +2,23 @@ import ClinicLogo from './ClinicLogo';
 import doctoraImg from '../assets/doctora.png';
 import './WelcomeView.css';
 
-export default function WelcomeView({ onStart }) {
+export default function WelcomeView({ 
+  onStart, 
+  cedula, 
+  eps, 
+  onCedulaChange, 
+  onEpsChange 
+}) {
+
+  const handleStartClick = () => {
+    if (!cedula || !eps) {
+      alert("Debes ingresar la cédula y seleccionar la EPS");
+      return;
+    }
+
+    onStart();
+  };
+
   return (
     <div className="welcome-view survey-view-enter">
       <div className="welcome-view__waves">
@@ -23,7 +39,10 @@ export default function WelcomeView({ onStart }) {
           <h1 className="welcome-view__title">
             ENCUESTA DE<br />SATISFACCIÓN
           </h1>
+
           <div className="welcome-view__form">
+
+            {/* CÉDULA */}
             <div className="welcome-view__field">
               <label className="welcome-view__label" htmlFor="cedula">
                 Número de cédula
@@ -32,10 +51,14 @@ export default function WelcomeView({ onStart }) {
                 id="cedula"
                 name="cedula"
                 type="text"
+                value={cedula}
+                onChange={(e) => onCedulaChange(e.target.value)}
                 className="welcome-view__input"
                 placeholder="Digite la cédula del paciente"
               />
             </div>
+
+            {/* EPS */}
             <div className="welcome-view__field">
               <label className="welcome-view__label" htmlFor="eps">
                 EPS a la que pertenece
@@ -43,9 +66,9 @@ export default function WelcomeView({ onStart }) {
               <select
                 id="eps"
                 name="eps"
-                type="text"
+                value={eps}
+                onChange={(e) => onEpsChange(e.target.value)}
                 className="welcome-view__input"
-                placeholder="Digite la EPS"
               >
                 <option value="">Seleccione su EPS</option>
                 <option value="Nueva EPS">Nueva EPS</option>
@@ -53,14 +76,17 @@ export default function WelcomeView({ onStart }) {
                 <option value="Particular">Particular</option>
               </select>
             </div>
+
           </div>
+
           <button
             type="button"
             className="welcome-view__cta"
-            onClick={onStart}
+            onClick={handleStartClick}
           >
             COMENZAR<br />ENCUESTA
           </button>
+
         </div>
       </div>
 

@@ -1,23 +1,48 @@
-import ClinicLogo from './ClinicLogo';
-import './ResultsView.css';
+import { useEffect, useState } from "react";
+import ClinicLogo from "./ClinicLogo";
+import "./ResultsView.css";
 
-export default function ResultsView({ answers, onBack }) {
+export default function ResultsView({ onBack }) {
+  const [encuestas, setEncuestas] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/api/encuestas")
+      .then((res) => res.json())
+      .then((data) => setEncuestas(data))
+      .catch((error) => console.error("Error:", error));
+  }, []);
+
   return (
     <div className="results-view survey-view-enter">
-      <div className="results-view__deco results-view__deco--tl" aria-hidden />
-      <div className="results-view__deco results-view__deco--br" aria-hidden />
-
       <h1 className="results-view__title">RESULTADOS DE LA ENCUESTA</h1>
 
-      <div className="results-view__card">
-        <div className="results-view__row">
-          <span className="results-view__label">¿Recomendaría la clínica?</span>
-          <span className="results-view__value">{answers.recommend || '—'}</span>
-        </div>
-        <div className="results-view__row">
-          <span className="results-view__label">Experiencia general</span>
-          <span className="results-view__value">{answers.experience || '—'}</span>
-        </div>
+      <div className="results-view__table-container">
+        <table className="results-view__table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Cédula</th>
+              <th>EPS</th>
+              <th>Recomienda</th>
+              <th>Experiencia</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            {encuestas.map((encuesta, index) => (
+              <tr key={encuesta._id}>
+                <td>{index + 1}</td>
+                <td>{encuesta.cedula}</td>
+                <td>{encuesta.eps}</td>
+                <td>{encuesta.recommend}</td>
+                <td>{encuesta.experience}</td>
+                <td>
+                  {new Date(encuesta.createdAt).toLocaleDateString()}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       <button type="button" className="results-view__back" onClick={onBack}>
