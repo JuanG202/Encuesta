@@ -1,6 +1,6 @@
 import ClinicLogo from './ClinicLogo';
 import doctoraImg from '../assets/doctora.png';
-import './WelcomeView.css';
+import '../styles/WelcomeView.css';
 
 export default function WelcomeView({ 
   onStart, 
@@ -76,6 +76,30 @@ export default function WelcomeView({
                 <option value="Particular">Particular</option>
               </select>
             </div>
+
+            {/* SEDE */}
+            <div className="welcome-view__field">
+              <label className="welcome-view__label" htmlFor="sede">
+                Sede a la que pertenece
+              </label>
+              <select
+                id="sede"
+                name="sede"
+                value={eps}
+                onChange={(e) => onEpsChange(e.target.value)}
+                className="welcome-view__input"
+              >
+                <option value="">Seleccione su Sede</option>
+                <option value="Sede 1">Sede 1</option>
+                <option value="Sede 2">Sede 2</option>
+                <option value="Sede 3">Sede 3</option>
+                <option value="Sede 4">Sede 4</option>
+                <option value="Sede 5">Sede 5</option>
+                <option value="Sede 6">Sede 6</option>
+                <option value="Sede 7">Sede 7</option>
+              </select>
+            </div>
+
 
           </div>
 

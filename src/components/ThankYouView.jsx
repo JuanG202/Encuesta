@@ -1,5 +1,5 @@
 import ClinicLogo from './ClinicLogo';
-import './ThankYouView.css';
+import '../styles/ThankYouView.css';
 
 export default function ThankYouView({ onViewResults, onRestart }) {
   return (

@@ -1,5 +1,5 @@
 import logoClinica from '../assets/clinicavision.jpg';
-import './ClinicLogo.css';
+import '../styles/ClinicLogo.css';
 
 export default function ClinicLogo({ variant = 'dark' }) {
   return (

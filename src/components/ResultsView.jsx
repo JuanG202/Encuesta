@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ClinicLogo from "./ClinicLogo";
-import "./ResultsView.css";
+import "../styles/ResultsView.css";
 
 export default function ResultsView({ onBack }) {
   const [encuestas, setEncuestas] = useState([]);

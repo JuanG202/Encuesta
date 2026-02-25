@@ -1,6 +1,6 @@
 import ClinicLogo from './ClinicLogo';
-import './QuestionView.css';
-import './QuestionExperienceView.css';
+import '../styles/QuestionView.css';
+import '../styles/QuestionExperienceView.css';
 
 const RATINGS = [
   { value: 'Muy bueno', emoji: '😊', color: '#eab308' },

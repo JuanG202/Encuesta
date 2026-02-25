@@ -1,5 +1,5 @@
 import ClinicLogo from './ClinicLogo';
-import './QuestionView.css';
+import '../styles/QuestionView.css';
 
 const OPTIONS = [
   'Definitivamente SI',
