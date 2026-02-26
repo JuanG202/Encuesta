@@ -23,6 +23,7 @@ export default function ResultsView({ onBack }) {
               <th>#</th>
               <th>Cédula</th>
               <th>EPS</th>
+              <th>Sede</th>
               <th>Recomienda</th>
               <th>Experiencia</th>
               <th>Fecha</th>
@@ -34,6 +35,7 @@ export default function ResultsView({ onBack }) {
                 <td>{index + 1}</td>
                 <td>{encuesta.cedula}</td>
                 <td>{encuesta.eps}</td>
+                <td>{encuesta.sede}</td>
                 <td>{encuesta.recommend}</td>
                 <td>{encuesta.experience}</td>
                 <td>

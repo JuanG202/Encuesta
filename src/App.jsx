@@ -21,6 +21,7 @@ export default function App() {
   const [answers, setAnswers] = useState({
     cedula: '',
     eps: '',
+    sede: '',
     recommend: '',
     experience: '',
   });
@@ -33,6 +34,9 @@ export default function App() {
 
   const handleEps = (value) =>
     setAnswers((a) => ({ ...a, eps: value }));
+
+  const handleSede = (value) =>
+    setAnswers((a) => ({ ...a, sede: value }));
 
   const handleExperience = (value) =>
     setAnswers((a) => ({ ...a, experience: value }));
@@ -70,6 +74,7 @@ export default function App() {
     setAnswers({
       cedula: '',
       eps: '',
+      sede: '',
       recommend: '',
       experience: '',
     });
@@ -81,8 +86,10 @@ export default function App() {
         onStart={handleStart}
         cedula={answers.cedula}
         eps={answers.eps}
+        sede={answers.sede}
         onCedulaChange={handleCedula}
         onEpsChange={handleEps}
+        onSedeChange={handleSede}
       />
     );
   }

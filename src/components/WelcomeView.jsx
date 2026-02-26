@@ -5,14 +5,17 @@ import '../styles/WelcomeView.css';
 export default function WelcomeView({ 
   onStart, 
   cedula, 
-  eps, 
+  eps,
+  sede, 
   onCedulaChange, 
-  onEpsChange 
-}) {
+  onEpsChange,
+  onSedeChange
+})
+{
 
   const handleStartClick = () => {
-    if (!cedula || !eps) {
-      alert("Debes ingresar la cédula y seleccionar la EPS");
+    if (!cedula || !eps || !sede) {
+      alert("Debes ingresar la cédula, seleccionar la EPS y escoger una sede ");
       return;
     }
 
@@ -85,14 +88,13 @@ export default function WelcomeView({
               <select
                 id="sede"
                 name="sede"
-                value={eps}
-                onChange={(e) => onEpsChange(e.target.value)}
+                value={sede}
+                onChange={(e) => onSedeChange(e.target.value)}
                 className="welcome-view__input"
               >
                 <option value="">Seleccione su Sede</option>
                 <option value="Sede 1">Sede 1</option>
                 <option value="Sede 2">Sede 2</option>
-                <option value="Sede 3">Sede 3</option>
                 <option value="Sede 4">Sede 4</option>
                 <option value="Sede 5">Sede 5</option>
                 <option value="Sede 6">Sede 6</option>
