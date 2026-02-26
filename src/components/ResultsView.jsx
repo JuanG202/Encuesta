@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import ClinicLogo from "./ClinicLogo";
 import "../styles/ResultsView.css";
 
 export default function ResultsView({ onBack }) {
@@ -217,10 +216,6 @@ export default function ResultsView({ onBack }) {
       <button type="button" className="results-view__back" onClick={onBack}>
         Volver al inicio
       </button>
-
-      <footer className="results-view__footer">
-        <ClinicLogo variant="dark" />
-      </footer>
     </div>
   );
 }
