@@ -2,6 +2,8 @@ import ClinicLogo from './ClinicLogo';
 import doctoraImg from '../assets/doctora.png';
 import '../styles/WelcomeView.css';
 
+const RESULTS_PASSWORD = 'vision'; // cámbiala por la que quieras
+
 export default function WelcomeView({ 
   onStart, 
   cedula, 
@@ -9,10 +11,12 @@ export default function WelcomeView({
   sede, 
   onCedulaChange, 
   onEpsChange,
+  onViewResults,
   onSedeChange
+  
 })
 {
-
+ 
   const handleStartClick = () => {
     if (!cedula || !eps || !sede) {
       alert("Debes ingresar la cédula, seleccionar la EPS y escoger una sede ");
@@ -20,6 +24,20 @@ export default function WelcomeView({
     }
 
     onStart();
+  };
+
+  const handleViewResultsClick = () => {
+    const value = window.prompt('Ingrese la contraseña para ver los resultados:');
+
+    if (!value) {
+      return;
+    }
+
+    if (value === RESULTS_PASSWORD) {
+      onViewResults();
+    } else {
+      alert('Contraseña incorrecta');
+    }
   };
 
   return (
@@ -105,14 +123,23 @@ export default function WelcomeView({
 
           </div>
 
-          <button
-            type="button"
-            className="welcome-view__cta"
-            onClick={handleStartClick}
-          >
-            COMENZAR<br />ENCUESTA
-          </button>
+          <div className="welcome-view__actions">
+            <button
+              type="button"
+              className="welcome-view__cta"
+              onClick={handleStartClick}
+            >
+              COMENZAR<br />ENCUESTA
+            </button>
 
+            <button
+              type="button"
+              className="welcome-view__cta welcome-view__cta--secondary"
+              onClick={handleViewResultsClick}
+            >
+              VER<br />RESULTADOS
+            </button>
+          </div>
         </div>
       </div>
 

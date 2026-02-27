@@ -1,4 +1,12 @@
 import { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from 'react-router-dom';
+
 import WelcomeView from './components/WelcomeView';
 import QuestionRecommendView from './components/QuestionRecommendView';
 import QuestionExperienceView from './components/QuestionExperienceView';
@@ -6,18 +14,10 @@ import ThankYouView from './components/ThankYouView';
 import ResultsView from './components/ResultsView';
 import './App.css';
 
-const STEPS = {
-  WELCOME: 'welcome',
-  QUESTION_RECOMMEND: 'question_recommend',
-  QUESTION_EXPERIENCE: 'question_experience',
-  THANK_YOU: 'thank_you',
-  RESULTS: 'results',
-};
+function AppRoutes() {
+  const navigate = useNavigate();
 
-export default function App() {
-  const [step, setStep] = useState(STEPS.WELCOME);
-
-  // 🔥 AGREGAMOS cedula y eps
+  // Estado global de las respuestas
   const [answers, setAnswers] = useState({
     cedula: '',
     eps: '',
@@ -26,9 +26,6 @@ export default function App() {
     experience: '',
   });
 
-  const handleStart = () => setStep(STEPS.QUESTION_EXPERIENCE);
-
-  // 🔥 NUEVAS FUNCIONES
   const handleCedula = (value) =>
     setAnswers((a) => ({ ...a, cedula: value }));
 
@@ -41,17 +38,36 @@ export default function App() {
   const handleExperience = (value) =>
     setAnswers((a) => ({ ...a, experience: value }));
 
-  const handleExperienceNext = () =>
-    setStep(STEPS.QUESTION_RECOMMEND);
-
   const handleRecommend = (value) =>
     setAnswers((a) => ({ ...a, recommend: value }));
 
-  // 🔥 AQUÍ SE CONECTA CON TU BACKEND REAL
+  const handleStart = () => {
+    navigate('/experience', { replace: true });
+  };
+
+  const handleExperienceNext = () => {
+    navigate('/recommend', { replace: true });
+  };
+
+  const handleViewResults = () => {
+    navigate('/results', { replace: true });
+  };
+
+  const handleRestart = () => {
+    setAnswers({
+      cedula: '',
+      eps: '',
+      sede: '',
+      recommend: '',
+      experience: '',
+    });
+    navigate('/', { replace: true });
+  };
+
+  // Enviar al backend y luego ir a gracias
   const handleRecommendNext = async () => {
     try {
-
-      console.log("Datos enviados:", answers);
+      console.log('Datos enviados:', answers);
       await fetch('http://localhost:4000/api/encuestas', {
         method: 'POST',
         headers: {
@@ -60,77 +76,90 @@ export default function App() {
         body: JSON.stringify(answers),
       });
 
-      setStep(STEPS.THANK_YOU);
+      navigate('/thank-you', { replace: true });
     } catch (error) {
       console.error('Error enviando encuesta:', error);
       alert('Error al guardar la encuesta');
     }
   };
 
-  const handleViewResults = () => setStep(STEPS.RESULTS);
-
-  const handleRestart = () => {
-    setStep(STEPS.WELCOME);
-    setAnswers({
-      cedula: '',
-      eps: '',
-      sede: '',
-      recommend: '',
-      experience: '',
-    });
-  };
-
-  if (step === STEPS.WELCOME) {
-    return (
-      <WelcomeView
-        onStart={handleStart}
-        cedula={answers.cedula}
-        eps={answers.eps}
-        sede={answers.sede}
-        onCedulaChange={handleCedula}
-        onEpsChange={handleEps}
-        onSedeChange={handleSede}
+  return (
+    <Routes>
+      {/* Inicio */}
+      <Route
+        path="/"
+        element={(
+          <WelcomeView
+            onStart={handleStart}
+            onViewResults={handleViewResults}
+            cedula={answers.cedula}
+            eps={answers.eps}
+            sede={answers.sede}
+            onCedulaChange={handleCedula}
+            onEpsChange={handleEps}
+            onSedeChange={handleSede}
+          />
+        )}
       />
-    );
-  }
 
-  if (step === STEPS.QUESTION_RECOMMEND) {
-    return (
-      <QuestionRecommendView
-        value={answers.recommend}
-        onChange={handleRecommend}
-        onNext={handleRecommendNext}
+      {/* Pregunta experiencia */}
+      <Route
+        path="/experience"
+        element={(
+          <QuestionExperienceView
+            value={answers.experience}
+            onChange={handleExperience}
+            onNext={handleExperienceNext}
+          />
+        )}
       />
-    );
-  }
 
-  if (step === STEPS.QUESTION_EXPERIENCE) {
-    return (
-      <QuestionExperienceView
-        value={answers.experience}
-        onChange={handleExperience}
-        onNext={handleExperienceNext}
+      {/* Pregunta recomendar */}
+      <Route
+        path="/recommend"
+        element={(
+          <QuestionRecommendView
+            value={answers.recommend}
+            onChange={handleRecommend}
+            onNext={handleRecommendNext}
+          />
+        )}
       />
-    );
-  }
 
-  if (step === STEPS.THANK_YOU) {
-    return (
-      <ThankYouView
-        onViewResults={handleViewResults}
-        onRestart={handleRestart}
+      {/* Pantalla de gracias */}
+      <Route
+        path="/thank-you"
+        element={(
+          <ThankYouView
+            onViewResults={handleViewResults}
+            onRestart={handleRestart}
+          />
+        )}
       />
-    );
-  }
 
-  if (step === STEPS.RESULTS) {
-    return (
-      <ResultsView
-        answers={answers}
-        onBack={handleRestart}
+      {/* Resultados */}
+      <Route
+        path="/results"
+        element={(
+          <ResultsView
+            answers={answers}
+            onBack={handleRestart}
+          />
+        )}
       />
-    );
-  }
 
-  return null;
+      {/* Cualquier otra ruta redirige al inicio */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <div className="App">
+        <AppRoutes />
+      </div>
+    </Router>
+  );
 }

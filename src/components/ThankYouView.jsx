@@ -1,7 +1,7 @@
 import ClinicLogo from './ClinicLogo';
 import '../styles/ThankYouView.css';
 
-export default function ThankYouView({ onViewResults, onRestart }) {
+export default function ThankYouView({onRestart }) {
   return (
     <div className="thankyou-view survey-view-enter">
       <div className="thankyou-view__deco thankyou-view__deco--tl" aria-hidden />
@@ -10,13 +10,6 @@ export default function ThankYouView({ onViewResults, onRestart }) {
       <h1 className="thankyou-view__title">GRACIAS POR TU OPINION</h1>
 
       <div className="thankyou-view__actions">
-        <button
-          type="button"
-          className="thankyou-view__btn"
-          onClick={onViewResults}
-        >
-          VER<br />RESULTADOS
-        </button>
         <button
           type="button"
           className="thankyou-view__btn thankyou-view__btn--secondary"
