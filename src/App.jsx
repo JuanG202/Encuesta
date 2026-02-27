@@ -10,6 +10,7 @@ import {
 import WelcomeView from './components/WelcomeView';
 import QuestionRecommendView from './components/QuestionRecommendView';
 import QuestionExperienceView from './components/QuestionExperienceView';
+import QuestionOutstandingView from './components/QuestionOutstandingView';
 import ThankYouView from './components/ThankYouView';
 import ResultsView from './components/ResultsView';
 import './App.css';
@@ -24,6 +25,9 @@ function AppRoutes() {
     sede: '',
     recommend: '',
     experience: '',
+    outstanding: '',
+    staffName: '',
+    serviceArea: '',
   });
 
   const handleCedula = (value) =>
@@ -40,6 +44,15 @@ function AppRoutes() {
 
   const handleRecommend = (value) =>
     setAnswers((a) => ({ ...a, recommend: value }));
+
+  const handleOutstanding = (value) =>
+    setAnswers((a) => ({ ...a, outstanding: value }));
+
+  const handleStaffName = (value) =>
+    setAnswers((a) => ({ ...a, staffName: value }));
+
+  const handleServiceArea = (value) =>
+    setAnswers((a) => ({ ...a, serviceArea: value }));
 
   const handleStart = () => {
     navigate('/experience', { replace: true });
@@ -60,12 +73,20 @@ function AppRoutes() {
       sede: '',
       recommend: '',
       experience: '',
+      outstanding: '',
+      staffName: '',
+      serviceArea: '',
     });
     navigate('/', { replace: true });
   };
 
+  // Ir a la pregunta de reconocimiento de buen servicio
+  const handleRecommendNext = () => {
+    navigate('/outstanding', { replace: true });
+  };
+
   // Enviar al backend y luego ir a gracias
-  const handleRecommendNext = async () => {
+  const handleOutstandingNext = async () => {
     try {
       console.log('Datos enviados:', answers);
       await fetch('http://localhost:4000/api/encuestas', {
@@ -122,6 +143,22 @@ function AppRoutes() {
             value={answers.recommend}
             onChange={handleRecommend}
             onNext={handleRecommendNext}
+          />
+        )}
+      />
+
+      {/* Reconocimiento de buen servicio */}
+      <Route
+        path="/outstanding"
+        element={(
+          <QuestionOutstandingView
+            value={answers.outstanding}
+            staffName={answers.staffName}
+            area={answers.serviceArea}
+            onValueChange={handleOutstanding}
+            onStaffNameChange={handleStaffName}
+            onAreaChange={handleServiceArea}
+            onNext={handleOutstandingNext}
           />
         )}
       />
