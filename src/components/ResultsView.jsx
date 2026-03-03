@@ -9,6 +9,8 @@ export default function ResultsView({ onBack }) {
     sede: "all",
     recommend: "all",
     experience: "all",
+    staffName: "all",
+    area: "all",
   });
 
   useEffect(() => {
@@ -39,13 +41,21 @@ export default function ResultsView({ onBack }) {
     const matchExperience =
       filters.experience === "all" ||
       encuesta.experience === filters.experience;
+    const matchstaffName =
+      filters.staffName === "all" ||
+      encuesta.staffName === filters.staffName;
+    const matcharea =
+      filters.area === "all" ||
+      encuesta.area === filters.area;
 
     return (
       matchCedula &&
       matchEps &&
       matchSede &&
       matchRecommend &&
-      matchExperience
+      matchExperience &&
+      matchstaffName &&
+      matcharea
     );
   });
 
@@ -143,6 +153,7 @@ export default function ResultsView({ onBack }) {
                   }))
                 }
               >
+                
                 <option value="all">Todas</option>
                 {uniqueValues("recommend").map((value) => (
                   <option key={value} value={value}>
@@ -151,7 +162,7 @@ export default function ResultsView({ onBack }) {
                 ))}
               </select>
             </div>
-
+                
             <div className="results-view__filter">
               <label
                 className="results-view__filter-label"
@@ -191,7 +202,10 @@ export default function ResultsView({ onBack }) {
                 <th>Sede</th>
                 <th>Recomienda</th>
                 <th>Experiencia</th>
+                <th>Colaborador</th>
+                <th>Area</th>
                 <th>Fecha</th>
+
               </tr>
             </thead>
             <tbody>
@@ -203,6 +217,8 @@ export default function ResultsView({ onBack }) {
                   <td>{encuesta.sede}</td>
                   <td>{encuesta.recommend}</td>
                   <td>{encuesta.experience}</td>
+                  <td>{encuesta.staffName}</td>
+                  <td>{encuesta.serviceArea}</td>
                   <td>
                     {new Date(encuesta.createdAt).toLocaleDateString()}
                   </td>
