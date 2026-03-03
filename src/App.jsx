@@ -89,7 +89,7 @@ function AppRoutes() {
   const handleOutstandingNext = async () => {
     try {
       console.log('Datos enviados:', answers);
-      await fetch('http://localhost:4000/api/encuestas', {
+      await fetch('https://encuestaclinivision-back.vercel.app/api/encuestas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

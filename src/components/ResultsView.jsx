@@ -14,7 +14,7 @@ export default function ResultsView({ onBack }) {
   });
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/encuestas")
+    fetch("https://encuestaclinivision-back.vercel.app/api/encuestas")
       .then((res) => res.json())
       .then((data) => setEncuestas(data))
       .catch((error) => console.error("Error:", error));
